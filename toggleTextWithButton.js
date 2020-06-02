@@ -1,39 +1,42 @@
 class ToggleText extends HTMLElement {
 
+    isVisible;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
         <style>
-        p{
-            display:none;
-        }
+       
         div{
             margin:10px 0px;
+            color:blue;
+        }
+        #para{
+            display:none;
         }
         </style>
         <div>
-        <button></button>
-        <p><slot></slot></p>
+        <button><slot></slot></button>
+        <p id="para">I am getting displayed :)</p>
         </div>
         `
 
     }
 
     connectedCallback() {
-        this.para = this.shadowRoot.querySelector('p');
-        const buttonText = this.getAttribute('button-text') || 'Toggle text';
+
+        this.para = this.shadowRoot.querySelector('#para');
+        
         let button = this.shadowRoot.querySelector('button');
-        button.textContent = buttonText;
+
         this.listener = button.addEventListener('click', this._toggleTextHandler);
     }
 
     _toggleTextHandler = () => {
-        if (this.para.style.display === 'none') {
-            this.para.style.display = 'block';
-        } else {
-            this.para.style.display = 'none'
-        }
+        
+        this.isVisible = !this.isVisible;
+        this.para.style.display = this.isVisible ? 'block' : 'none';
+
     }
     disconnectedCallback() {
         this.shadowRoot.querySelector('button').removeEventListener(this.listener);

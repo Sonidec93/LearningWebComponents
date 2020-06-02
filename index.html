@@ -9,6 +9,11 @@
     <script src="confirm-link.js"></script>
     <script src="toggleTextWithButton.js"></script>
 
+    <style>
+        my-tooltip{
+            color:pink;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,15 +21,15 @@
         <slot>Default value</slot>
         <span>(?)</span>
     </template>
-    <div>
+    <div class="lwc-part-1">
         <mk-tooltip text="learning web components">Web components </mk-tooltip>are awesome
 
     </div>
-    <mk-tooltip></mk-tooltip>
+    <mk-tooltip><span>Hello</span></mk-tooltip>
     <div>This is outside the shadow DOM</div>
 
     <a is="my-confirm-link" href="https://www.google.com">Go to google website</a>
-    <toggle-text-with-button button-text="Toggle with me!">I am getting displayed :)</toggle-text-with-button>
+    <toggle-text-with-button>Toggle with me!</toggle-text-with-button>
 
 
 </body>
