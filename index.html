@@ -8,16 +8,17 @@
     <script src="tooltip.js"></script>
     <script src="confirm-link.js"></script>
     <script src="toggleTextWithButton.js"></script>
+    <script src="Modal.js"></script>
 
     <style>
-        my-tooltip{
-            color:pink;
+        my-tooltip {
+            color: pink;
         }
     </style>
 </head>
 
 <body>
-    <template id="my-template">
+    <!-- <template id="my-template">
         <slot>Default value</slot>
         <span>(?)</span>
     </template>
@@ -30,7 +31,21 @@
 
     <a is="my-confirm-link" href="https://www.google.com">Go to google website</a>
     <toggle-text-with-button>Toggle with me!</toggle-text-with-button>
+    <div> -->
 
+    <p>Click button to open the modal</p>
+    <button>open modal</button>
+    <my-modal><div slot="header">Please Confirm</div><div>Do you want to perform this action?</div></my-modal>
+    </div>
+
+    <script>
+        let openModalButton=document.querySelector('button');
+        let myModal=document.querySelector('my-modal');
+        openModalButton.addEventListener('click',()=>{
+            myModal.open();
+            console.log(myModal.isOpen);
+        })
+    </script>
 
 </body>
 
