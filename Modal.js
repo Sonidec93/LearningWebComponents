@@ -26,7 +26,7 @@ class Modal extends HTMLElement {
             grid-template-rows:30% 50% 20%;
             z-index:100;
             position:fixed;
-            top:30vh;
+            top:10vh;
             left:30%;
             background:#fff;
             height:40vh;
@@ -35,6 +35,7 @@ class Modal extends HTMLElement {
             padding:1rem;
             opacity:0;
             pointer-events:none;
+            transition: all 0.3s ease-out;
         }
         .action-buttons{
             display:flex;
@@ -61,11 +62,12 @@ class Modal extends HTMLElement {
         }
         :host([open]) #backdrop{
             opacity:0.6;
-            pointer-events:auto;
+            pointer-events:all;
         }
         :host([open]) #modal{
+            top:30vh;
             opacity:1;
-            pointer-events:auto;
+            pointer-events:all;
         }
         </style>
         <div id="backdrop"></div>
@@ -86,6 +88,10 @@ class Modal extends HTMLElement {
             </section>
         </div>
         `
+        const slots = this.shadowRoot.querySelectorAll('slot');
+        slots[1].addEventListener('slotchange', () => {
+            console.dir(slots[1].assignedNodes());
+        })
     }
     connectedCallback() {
 
@@ -95,10 +101,12 @@ class Modal extends HTMLElement {
         this.backdrop.addEventListener('click', this.close);
 
     }
-    close = (event) => {
-        event.preventDefault();
+    close = (ev) => {
+        ev.preventDefault();
         this.removeAttribute('open');
         this.isOpen = false;
+        const event = new Event('closed');
+        this.dispatchEvent(event)
 
     }
     // attributeChangedCallback(name, oldValue, newValue) {
@@ -120,9 +128,10 @@ class Modal extends HTMLElement {
         this.backdrop.removeEventListener('click', this.close);
         this.cancelButton.removeEventListener('click', this.close)
     }
-    open = () => {
+    open = (event) => {
         this.setAttribute('open', '');
         this.isOpen = true;
+        this.dispatchEvent(new Event('opened', { bubbles: true, composed: true }))//bubble prop for event bubbling and composed so that it bubbles our of shadow DOM
     }
 }
 

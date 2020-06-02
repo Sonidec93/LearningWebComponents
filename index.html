@@ -35,15 +35,24 @@
 
     <p>Click button to open the modal</p>
     <button>open modal</button>
-    <my-modal><div slot="header">Please Confirm</div><div>Do you want to perform this action?</div></my-modal>
+    <my-modal>
+        <div slot="header">Please Confirm</div>
+        <div>Do you want to perform this action?</div>
+    </my-modal>
     </div>
 
     <script>
-        let openModalButton=document.querySelector('button');
-        let myModal=document.querySelector('my-modal');
-        openModalButton.addEventListener('click',()=>{
+        let openModalButton = document.querySelector('button');
+        let myModal = document.querySelector('my-modal');
+        openModalButton.addEventListener('click', () => {
             myModal.open();
             console.log(myModal.isOpen);
+        })
+        myModal.addEventListener('closed', () => {
+            console.log('event bubbled in close');
+        })
+        myModal.addEventListener('opened', () => {
+            console.log('event bubbled in open');
         })
     </script>
 
